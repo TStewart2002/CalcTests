@@ -6,7 +6,7 @@ class CalcTests
 {
     static void Main()
     {
-        int n = 5;      //Determines the number of calculations to be performed
+        int n = 80000;      //Determines the number of calculations to be performed
 
         int[,] numbers;       //Creates an array to hold the random numbers
         Stopwatch timer = new Stopwatch();        //Initializes the timer
@@ -18,7 +18,7 @@ class CalcTests
         AddNums(numbers, n);        //Perform the adding operation and time it
         timer.Stop();
         
-        Console.WriteLine("Integer Additions");
+        Console.WriteLine("Integer Additions:");
         Console.WriteLine(timer.ElapsedMilliseconds + " ms");       //Display the time it took for integer addition
         Console.WriteLine(timer.ElapsedTicks + " ticks");
         float addTicks = timer.ElapsedTicks; 
@@ -27,12 +27,10 @@ class CalcTests
 
 
         timer.Restart(); 
-        timer.Start();
         MultNums(numbers, n);       //Perform the multiplying operation and time it
         timer.Stop();
 
-        Console.WriteLine("\n \n");
-        Console.WriteLine("Integer Multiplication");
+        Console.WriteLine("\nInteger Multiplication:");
         Console.WriteLine(timer.ElapsedMilliseconds + " ms");       //Display the time it took for integer multiplication
         Console.WriteLine(timer.ElapsedTicks + " ticks");
         float multTicks = timer.ElapsedTicks;
@@ -41,9 +39,37 @@ class CalcTests
         //Find the ration of adding vs. multiplying and display it
         float ratio = addTicks / multTicks;
         
-        Console.WriteLine("\n \n");
-        Console.WriteLine("Ratio (Add vs. Mult):");
+        Console.WriteLine("\nRatio (Add vs. Mult):");
         Console.WriteLine(ratio);
+
+
+
+        timer.Restart();
+        SquareMult(numbers, n);     //Square the first row of numbers by multiplying them by themselves and time it
+        timer.Stop();
+
+        Console.WriteLine("\n \nSquare by Multiplication:");
+        Console.WriteLine(timer.ElapsedMilliseconds + " ms");       //Display the time it took for squaring by multiplication
+        Console.WriteLine(timer.ElapsedTicks + " ticks");
+        float squareMultTicks = timer.ElapsedTicks;
+
+
+        timer.Restart();
+        SquareNums(numbers, n);     //Square the first row of numbers using math pow function and time it
+        timer.Stop();
+
+        Console.WriteLine("\nSquare with Math.Pow:");
+        Console.WriteLine(timer.ElapsedMilliseconds + " ms");       //Display the time it took for squaring by math pow function
+        Console.WriteLine(timer.ElapsedTicks + " ticks");
+        float squareTicks = timer.ElapsedTicks;
+
+
+        //Find the ratio of squaring by multiplying vs. math pow function and display it
+        float squareRatio = squareMultTicks / squareTicks;
+        Console.WriteLine("\nRation (Mult vs. Math.Pow:)");
+        Console.WriteLine(squareRatio);
+
+
 
 
     }
@@ -84,7 +110,27 @@ class CalcTests
     {
         for (int i = 0; i < count; i++)
         {
-            nums[i,2] = nums[i,0]*nums[i,1];
+            nums[i,2] = nums[i,0] * nums[i,1];
+        }
+    }
+
+
+    //Function that squares by multiplication
+    static void SquareMult(int[,] nums, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            nums[i,2] = nums[i,0]*nums[i,0];
+        }
+    }
+
+
+    //Function that squares using the pow function
+    static void SquareNums(int[,] nums, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            nums[i,2] = (int)Math.Pow(nums[i,0], 2);
         }
     }
 }
